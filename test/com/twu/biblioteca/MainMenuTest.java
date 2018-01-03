@@ -14,7 +14,6 @@ public class MainMenuTest {
 
     @Test
     public void displayOptions() {
-        String s  = "Main Menu\n\n-List Books\n-Checkout Book\n\nPlease select an option or type quit to exit\n";
-        assertEquals(s, tester.displayOptions());
+        assertEquals(TestData.getMenuDisplay(), tester.displayOptions());
     }
 }

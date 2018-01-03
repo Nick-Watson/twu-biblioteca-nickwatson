@@ -17,11 +17,15 @@ public class BookList {
         return String.format("%-25s%-25s%-25s\n","Title","Author","Year");
     }
 
+    private String formatBook(Book book) {
+        return String.format("%-25s%-25s%-25s\n",book.getTitle(),book.getAuthor(),book.getYear());
+    }
+
     private String booksToString() {
         StringBuilder s = new StringBuilder();
 
         for (Book b : getAvailableBooks()) {
-            if (!b.isCheckedOut()) s.append(String.format("%-25s%-25s%-25s\n",b.getTitle(),b.getAuthor(),b.getYear()));
+            if (!b.isCheckedOut()) s.append(formatBook(b));
         }
         return s.toString();
     }
@@ -39,10 +43,27 @@ public class BookList {
         return false;
     }
 
+    public Boolean bookCanBeReturned(String book) {
+        for (Book b : getAvailableBooks()) {
+            if (b.getTitle().toLowerCase().equals(book) && b.isCheckedOut()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void checkoutBook(String book) {
         for (Book b : getAvailableBooks()) {
-            if (b.getTitle().toLowerCase().equals(book.toLowerCase())) {
+            if (b.getTitle().toLowerCase().equals(book.toLowerCase()) && !b.isCheckedOut()) {
                 b.setIsCheckedOut(true);
+            }
+        }
+    }
+
+    public void returnBook(String book) {
+        for (Book b : getAvailableBooks()) {
+            if (b.getTitle().toLowerCase().equals(book.toLowerCase()) && b.isCheckedOut()) {
+                b.setIsCheckedOut(false);
             }
         }
     }

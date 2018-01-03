@@ -10,11 +10,6 @@ public class Library {
         this.name = name;
     }
 
-    Library (String name, BookList bookList) {
-        this.name = name;
-        setBookList(bookList);
-    }
-
     private String getLibraryName() {
         return this.name;
     }
@@ -23,23 +18,27 @@ public class Library {
         this.user = usr;
     }
 
-    public User getUser() {
+    private User getUser() {
         return this.user;
     }
 
-    private BookList getBookList() {
-        return  this.bookList;
+    public BookList getBookList() {
+        return this.bookList;
     }
 
     public void setBookList(BookList bookList) {
         this.bookList = bookList;
     }
 
+    private MainMenu getMainMenu(){
+        return this.mainMenu;
+    }
+
     public String createWelcomeMessage(){
         return "Welcome to the " + getLibraryName();
     }
 
-    public void printToConsole(String s) {
+    private void printToConsole(String s) {
         System.out.println(s);
     }
 
@@ -48,7 +47,7 @@ public class Library {
     }
 
     private void displayMainMenu() {
-        printToConsole(mainMenu.displayOptions());
+        printToConsole(getMainMenu().displayOptions());
     }
 
     private void processListBooks() {
@@ -63,41 +62,77 @@ public class Library {
         return "That book is not available";
     }
 
+    public String returnBook (String book) {
+        if (getBookList().bookCanBeReturned(book)) {
+            getBookList().returnBook(book);
+            return "Thank you for returning the book";
+        }
+        return "That is not a valid book to return";
+    }
+
+    private Boolean checkCommandIsQuit (String input) {
+        return input.equals("quit");
+    }
+
+    private Boolean checkCommandIsMainMenu (String input) {
+        return input.equals("main menu");
+    }
+
     private void processCheckoutBook() {
-        printToConsole("Which book would like to checkout?");
+        printToConsole("Input the book you would like to checkout or main menu to go back");
         Boolean checkoutSuccess = false;
-        String s = getUser().getUserInput();
-        while (!checkoutSuccess && !s.equals("quit")) {
-            if (getBookList().bookIsAvailable(s)) {
-                printToConsole(checkoutBook(s));
+        String input = getUser().getUserInput();
+        while (!checkoutSuccess && !checkCommandIsQuit(input) && !checkCommandIsMainMenu(input)) {
+            if (getBookList().bookIsAvailable(input)) {
+                printToConsole(checkoutBook(input));
                 checkoutSuccess = true;
             }
             else {
-                printToConsole(checkoutBook(s));
-                s = getUser().getUserInput();
+                printToConsole(checkoutBook(input));
+                input = getUser().getUserInput();
+            }
+        }
+    }
+
+    private void processReturnBook() {
+        printToConsole("Input the book you would like to return or main menu to go back");
+        Boolean returnSuccess = false;
+        String input = getUser().getUserInput();
+        while (!returnSuccess && !checkCommandIsQuit(input) && !checkCommandIsMainMenu(input)) {
+            if (getBookList().bookCanBeReturned(input)) {
+                printToConsole(returnBook(input));
+                returnSuccess = true;
+            }
+            else {
+                printToConsole(returnBook(input));
+                input = getUser().getUserInput();
             }
         }
     }
 
     private void processQuit() {
         printToConsole("Goodbye");
+        System.exit(0);
     }
 
     private void processInvalidOption() {
         printToConsole("Select a valid option!");
     }
 
-    public void processCommand(String command) {
+    private void processCommand(String command) {
         if (command.equals("quit")) processQuit();
         else if (command.equals("list books")) processListBooks();
         else if (command.equals("checkout book")) processCheckoutBook();
+        else if (command.equals("return book")) processReturnBook();
         else processInvalidOption();
     }
 
     public void run() {
         displayWelcomeMessage();
         displayMainMenu();
-        while (!getUser().getUserChoice().equals("quit")) {
+        while (true) {
+            if (checkCommandIsQuit(getUser().getUserChoice())) processQuit();
+            if (checkCommandIsMainMenu(getUser().getUserChoice())) displayMainMenu();
             processCommand(getUser().getUserInput());
         }
     }

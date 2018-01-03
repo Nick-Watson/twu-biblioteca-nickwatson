@@ -43,4 +43,12 @@ public class BookListTest {
         String s = String.format("%-25s%-25s%-25s\n", "Title", "Author", "Year");
         assertEquals(s, tester.displayList());
     }
+
+    @Test
+    public void returnBookSetsBooksCheckedOutPropertyToFalse() {
+        tester.checkoutBook("the hobbit");
+        assertFalse(tester.bookIsAvailable("the hobbit"));
+        tester.returnBook("the hobbit");
+        assertTrue(tester.bookIsAvailable("the hobbit"));
+    }
 }

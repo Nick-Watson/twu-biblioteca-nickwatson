@@ -9,4 +9,8 @@ public class TestData {
         s.append(String.format("%-25s%-25s%-25s\n", "Harry Potter", "J.K Rowling", "1999" ));
         return s.toString();
     }
+
+    public static String getMenuDisplay() {
+        return "Main Menu\n\n- List Books\n- Checkout Book\n- Return Book\n\nPlease select an option or type quit at anytime to exit\n";
+    }
 }

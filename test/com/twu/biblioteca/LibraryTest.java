@@ -23,7 +23,13 @@ public class LibraryTest {
     public void checkoutBookReturnsCorrectResponseOnSuccessfulCheckout() {
         assertEquals("Thank you! Enjoy the book", tester.checkoutBook("lord of the rings"));
         assertEquals("That book is not available", tester.checkoutBook("the hobbit"));
+    }
 
+    @Test
+    public void returnBookReturnsCorrectResponseOnSuccessfulCheckout() {
+        tester.getBookList().checkoutBook("lord of the rings");
+        assertEquals("Thank you for returning the book", tester.returnBook("lord of the rings"));
+        assertEquals("That is not a valid book to return", tester.returnBook("the hobbit"));
     }
 
 }
