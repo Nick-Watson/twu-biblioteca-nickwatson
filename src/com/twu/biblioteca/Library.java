@@ -2,7 +2,9 @@ package com.twu.biblioteca;
 
 public class Library {
     private String name;
-    private BookList bookList;
+    private MainMenu mainMenu = new MainMenu();
+    private BookList bookList = null;
+    private User user = null;
 
     Library (String name) {
         this.name = name;
@@ -10,11 +12,19 @@ public class Library {
 
     Library (String name, BookList bookList) {
         this.name = name;
-        this.bookList = bookList;
+        setBookList(bookList);
     }
 
     private String getLibraryName() {
         return this.name;
+    }
+
+    public void setUser(User usr) {
+        this.user = usr;
+    }
+
+    public User getUser() {
+        return this.user;
     }
 
     private BookList getBookList() {
@@ -29,16 +39,66 @@ public class Library {
         return "Welcome to the " + getLibraryName();
     }
 
-    private void displayWelcomeMessage() {
-        System.out.println(createWelcomeMessage());
+    public void printToConsole(String s) {
+        System.out.println(s);
     }
 
-    private void displayBookList() {
-        System.out.println(getBookList().listToString());
+    private void displayWelcomeMessage() {
+        printToConsole(createWelcomeMessage());
+    }
+
+    private void displayMainMenu() {
+        printToConsole(mainMenu.displayOptions());
+    }
+
+    private void processListBooks() {
+        printToConsole(getBookList().displayList());
+    }
+
+    public String checkoutBook (String book) {
+        if (getBookList().bookIsAvailable(book)) {
+            getBookList().checkoutBook(book);
+            return "Thank you! Enjoy the book";
+        }
+        return "That book is not available";
+    }
+
+    private void processCheckoutBook() {
+        printToConsole("Which book would like to checkout?");
+        Boolean checkoutSuccess = false;
+        String s = getUser().getUserInput();
+        while (!checkoutSuccess && !s.equals("quit")) {
+            if (getBookList().bookIsAvailable(s)) {
+                printToConsole(checkoutBook(s));
+                checkoutSuccess = true;
+            }
+            else {
+                printToConsole(checkoutBook(s));
+                s = getUser().getUserInput();
+            }
+        }
+    }
+
+    private void processQuit() {
+        printToConsole("Goodbye");
+    }
+
+    private void processInvalidOption() {
+        printToConsole("Select a valid option!");
+    }
+
+    public void processCommand(String command) {
+        if (command.equals("quit")) processQuit();
+        else if (command.equals("list books")) processListBooks();
+        else if (command.equals("checkout book")) processCheckoutBook();
+        else processInvalidOption();
     }
 
     public void run() {
         displayWelcomeMessage();
-        displayBookList();
+        displayMainMenu();
+        while (!getUser().getUserChoice().equals("quit")) {
+            processCommand(getUser().getUserInput());
+        }
     }
 }

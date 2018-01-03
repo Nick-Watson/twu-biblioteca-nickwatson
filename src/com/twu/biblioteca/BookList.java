@@ -21,12 +21,29 @@ public class BookList {
         StringBuilder s = new StringBuilder();
 
         for (Book b : getAvailableBooks()) {
-            s.append(String.format("%-25s%-25s%-25s\n",b.getTitle(),b.getAuthor(),b.getYear()));
+            if (!b.isCheckedOut()) s.append(String.format("%-25s%-25s%-25s\n",b.getTitle(),b.getAuthor(),b.getYear()));
         }
         return s.toString();
     }
 
-    public String listToString() {
+    public String displayList() {
         return headerToString() + booksToString();
+    }
+
+    public Boolean bookIsAvailable(String book) {
+        for (Book b : getAvailableBooks()) {
+            if (b.getTitle().toLowerCase().equals(book) && !b.isCheckedOut()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void checkoutBook(String book) {
+        for (Book b : getAvailableBooks()) {
+            if (b.getTitle().toLowerCase().equals(book.toLowerCase())) {
+                b.setIsCheckedOut(true);
+            }
+        }
     }
 }
