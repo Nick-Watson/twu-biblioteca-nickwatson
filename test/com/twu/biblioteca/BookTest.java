@@ -13,17 +13,13 @@ public class BookTest {
     }
 
     @Test
-    public void getTitle() {
-        assertEquals("The Hobbit", tester.getTitle());
-    }
-
-    @Test
     public void getAuthor() {
         assertEquals("J. R. R. Tolkien", tester.getAuthor());
     }
 
     @Test
-    public void getYear() {
+    public void inheritsFromItem() {
+        assertEquals("The Hobbit", tester.getTitle());
         assertEquals(1937, tester.getYear());
     }
 }
