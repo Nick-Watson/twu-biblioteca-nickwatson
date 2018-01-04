@@ -7,6 +7,7 @@ public class MainMenu {
 
     MainMenu() {
         options.add("List Books");
+        options.add("List Movies");
         options.add("Checkout Book");
         options.add("Return Book");
     }

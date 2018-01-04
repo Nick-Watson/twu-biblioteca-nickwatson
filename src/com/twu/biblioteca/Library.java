@@ -4,6 +4,7 @@ public class Library {
     private String name;
     private MainMenu mainMenu = new MainMenu();
     private BookList bookList = null;
+    private MovieList movieList = null;
     private User user = null;
 
     Library (String name) {
@@ -30,6 +31,14 @@ public class Library {
         this.bookList = bookList;
     }
 
+    public MovieList getMovieList() {
+        return movieList;
+    }
+
+    public void setMovieList(MovieList movieList) {
+        this.movieList = movieList;
+    }
+
     private MainMenu getMainMenu(){
         return this.mainMenu;
     }
@@ -52,6 +61,10 @@ public class Library {
 
     private void processListBooks() {
         printToConsole(getBookList().displayList());
+    }
+
+    private void processListMovies() {
+        printToConsole(getMovieList().displayList());
     }
 
     public String checkoutBook (String book) {
@@ -122,6 +135,7 @@ public class Library {
     private void processCommand(String command) {
         if (command.equals("quit")) processQuit();
         else if (command.equals("list books")) processListBooks();
+        else if (command.equals("list movies")) processListMovies();
         else if (command.equals("checkout book")) processCheckoutBook();
         else if (command.equals("return book")) processReturnBook();
         else processInvalidOption();

@@ -9,4 +9,13 @@ public class Data {
 
         return bL;
     }
+
+    public static MovieList buildMovieList() {
+        MovieList mL = new MovieList();
+        mL.addItem(new Movie("Inception", "C. Nolan", 2010, 9));
+        mL.addItem(new Movie("Dunkirk", "C. Nolan", 2017, 8));
+        mL.addItem(new Movie("Logan", "James Mangold", 2017, 8));
+
+        return mL;
+    }
 }
