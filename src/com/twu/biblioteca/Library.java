@@ -55,16 +55,16 @@ public class Library {
     }
 
     public String checkoutBook (String book) {
-        if (getBookList().bookIsAvailable(book)) {
-            getBookList().checkoutBook(book);
+        if (getBookList().itemIsAvailable(book)) {
+            getBookList().checkoutItem(book);
             return "Thank you! Enjoy the book";
         }
         return "That book is not available";
     }
 
     public String returnBook (String book) {
-        if (getBookList().bookCanBeReturned(book)) {
-            getBookList().returnBook(book);
+        if (getBookList().itemCanBeReturned(book)) {
+            getBookList().returnItem(book);
             return "Thank you for returning the book";
         }
         return "That is not a valid book to return";
@@ -83,7 +83,7 @@ public class Library {
         Boolean checkoutSuccess = false;
         String input = getUser().getUserInput();
         while (!checkoutSuccess && !checkCommandIsQuit(input) && !checkCommandIsMainMenu(input)) {
-            if (getBookList().bookIsAvailable(input)) {
+            if (getBookList().itemIsAvailable(input)) {
                 printToConsole(checkoutBook(input));
                 checkoutSuccess = true;
             }
@@ -99,7 +99,7 @@ public class Library {
         Boolean returnSuccess = false;
         String input = getUser().getUserInput();
         while (!returnSuccess && !checkCommandIsQuit(input) && !checkCommandIsMainMenu(input)) {
-            if (getBookList().bookCanBeReturned(input)) {
+            if (getBookList().itemCanBeReturned(input)) {
                 printToConsole(returnBook(input));
                 returnSuccess = true;
             }
