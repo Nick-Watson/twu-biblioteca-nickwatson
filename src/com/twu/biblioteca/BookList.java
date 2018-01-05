@@ -21,4 +21,12 @@ public class BookList extends ItemList {
     public String displayList() {
         return headerToString() + booksToString();
     }
+
+    public String checkoutSuccessMessage() {
+        return "Thank you! Enjoy the book";
+    }
+
+    public String returnSuccessMessage() {
+        return "Thank you for returning the book";
+    }
 }

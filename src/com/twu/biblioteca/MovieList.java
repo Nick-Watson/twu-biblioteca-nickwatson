@@ -21,4 +21,12 @@ public class MovieList extends ItemList {
     public String displayList() {
         return headerToString() + moviesToString();
     }
+
+    public String checkoutSuccessMessage() {
+        return "Thank you! Enjoy the movie";
+    }
+
+    public String returnSuccessMessage() {
+        return "Thank you for returning the movie";
+    }
 }

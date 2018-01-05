@@ -11,6 +11,6 @@ public class TestData {
 //    }
 
     public static String getMenuDisplay() {
-        return "Main Menu\n\n- List Books\n- List Movies\n- Checkout Book\n- Return Book\n\nPlease select an option or type quit at anytime to exit\n";
+        return "Main Menu\n\n- List Books\n- List Movies\n- Checkout Item\n- Return Item\n\nPlease select an option or type quit at anytime to exit\n";
     }
 }

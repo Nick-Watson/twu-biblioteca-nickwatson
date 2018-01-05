@@ -8,8 +8,8 @@ public class MainMenu {
     MainMenu() {
         options.add("List Books");
         options.add("List Movies");
-        options.add("Checkout Book");
-        options.add("Return Book");
+        options.add("Checkout Item");
+        options.add("Return Item");
     }
 
     public String displayOptions() {
