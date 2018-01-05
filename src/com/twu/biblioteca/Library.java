@@ -3,6 +3,7 @@ package com.twu.biblioteca;
 public class Library {
     private String name;
     private MainMenu mainMenu = new MainMenu();
+    private UserAccounts userAccounts = null;
     private BookList bookList = null;
     private MovieList movieList = null;
     private User user = null;
@@ -13,6 +14,14 @@ public class Library {
 
     private String getLibraryName() {
         return this.name;
+    }
+
+    public UserAccounts getUserAccounts() {
+        return userAccounts;
+    }
+
+    public void setUserAccounts(UserAccounts userAccounts) {
+        this.userAccounts = userAccounts;
     }
 
     public void setUser(User usr) {

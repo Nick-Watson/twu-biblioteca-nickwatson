@@ -6,6 +6,7 @@ public class BibliotecaApp {
         Library BPL = new Library("Bangalore Public Library");
         BPL.setBookList(Data.buildBookList());
         BPL.setMovieList(Data.buildMovieList());
+        BPL.setUserAccounts(Data.buildUserAccounts());
         BPL.setUser(new User());
         BPL.run();
     }
