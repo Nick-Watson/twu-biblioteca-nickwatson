@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 public class ItemTest {
     Item tester;
     @Before
-    public void setUp() throws Exception {
+    public void setUp(){
         tester = new Item("Star Wars", 2017);
     }
 
@@ -28,8 +28,9 @@ public class ItemTest {
     }
 
     @Test
-    public void setIsCheckedOut() {
-        tester.setIsCheckedOut(true);
+    public void canCheckOutItem() {
+        tester.checkoutItem("111-2222");
         assertTrue(tester.isCheckedOut());
+        assertEquals("111-2222", tester.getCheckedOutBy());
     }
 }

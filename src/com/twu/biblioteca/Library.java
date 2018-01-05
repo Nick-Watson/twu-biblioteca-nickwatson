@@ -16,7 +16,7 @@ public class Library {
         return this.name;
     }
 
-    public UserAccounts getUserAccounts() {
+    private UserAccounts getUserAccounts() {
         return userAccounts;
     }
 
@@ -65,7 +65,26 @@ public class Library {
     }
 
     private void displayMainMenu() {
-        printToConsole(getMainMenu().displayOptions());
+        printToConsole(getMainMenu().displayOptions(getUser().getLoggedIn()));
+    }
+
+    private void processLogin() {
+        while (!getUser().getLoggedIn()) {
+            printToConsole("Please input library number");
+            String libraryNumber = getUser().getUserInput();
+            printToConsole("Please input password");
+            String password = getUser().getUserInput();
+
+            if (getUserAccounts().authenticate(libraryNumber, password)) {
+                getUser().setLoggedIn(true);
+                getUser().setAccount(getUserAccounts().getAccountByLibraryNum(libraryNumber));
+                printToConsole("login success");
+            } else printToConsole("login fail, try again");
+        }
+    }
+
+    private void processUserInformation() {
+        printToConsole(getUser().getUserInformation());
     }
 
     private void processListBooks() {
@@ -101,13 +120,13 @@ public class Library {
     }
 
     private Boolean processBookCheckout (String book) {
-        getBookList().checkoutItem(book);
+        getBookList().checkoutItem(book, getUser().getUserLibraryNumber());
         printToConsole(getBookList().checkoutSuccessMessage());
         return true;
     }
 
     private Boolean processMovieCheckout (String movie) {
-        getMovieList().checkoutItem(movie);
+        getMovieList().checkoutItem(movie, getUser().getUserLibraryNumber());
         printToConsole(getMovieList().checkoutSuccessMessage());
         return true;
     }
@@ -125,6 +144,7 @@ public class Library {
     }
 
     private void processCheckoutItem() {
+        if (!getUser().getLoggedIn()) processLogin();
         printToConsole(checkoutItemInstructions());
         Boolean checkoutSuccess = false;
         String input = getUser().getUserInput();
@@ -141,6 +161,7 @@ public class Library {
     }
 
     private void processReturnItem() {
+        if (!getUser().getLoggedIn()) processLogin();
         printToConsole(returnItemInstructions());
         Boolean returnSuccess = false;
         String input = getUser().getUserInput();
@@ -168,6 +189,8 @@ public class Library {
     private void processCommand(String command) {
         if (command.equals("quit")) processQuit();
         else if (command.equals("main menu")) displayMainMenu();
+        else if (command.equals("login")) processLogin();
+        else if (command.equals("user")) processUserInformation();
         else if (command.equals("list books")) processListBooks();
         else if (command.equals("list movies")) processListMovies();
         else if (command.equals("checkout item")) processCheckoutItem();

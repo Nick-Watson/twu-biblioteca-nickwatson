@@ -13,7 +13,14 @@ public class UserAccounts {
         getAccounts().put(libraryNumber, a);
     }
 
+    private Boolean checkAccountExists(String libraryNumber) {
+        return getAccounts().containsKey(libraryNumber);
+    }
     public Account getAccountByLibraryNum(String libraryNumber) {
         return getAccounts().get(libraryNumber);
+    }
+
+    public Boolean authenticate(String libraryNumber, String password) {
+        return checkAccountExists(libraryNumber) && getAccountByLibraryNum(libraryNumber).authenticate(libraryNumber, password);
     }
 }

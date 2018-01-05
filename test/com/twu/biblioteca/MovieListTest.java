@@ -22,7 +22,7 @@ public class MovieListTest {
 
     @Test
     public void MoviesThatAreCheckedOutDoNotShowOnBookList() {
-        tester.checkoutItem("Inception");
+        tester.checkoutItem("Inception", "111-2222");
         String s = String.format("%-25s%-25s%-25s%-25s\n", "Title", "Director", "Year", "Rating");
         assertEquals(s, tester.displayList());
     }

@@ -22,7 +22,7 @@ public class BookListTest {
 
     @Test
     public void booksThatAreCheckedOutDoNotShowOnBookList() {
-        tester.checkoutItem("the hobbit");
+        tester.checkoutItem("the hobbit", "111-2222");
         String s = String.format("%-25s%-25s%-25s\n", "Title", "Author", "Year");
         assertEquals(s, tester.displayList());
     }

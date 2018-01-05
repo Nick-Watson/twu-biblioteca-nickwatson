@@ -10,11 +10,16 @@ public class AccountTest {
 
     @Before
     public void setUp() {
-        tester = new Account("nick watson", "nickwatson@gmail.com", "07807388815");
+        tester = TestData.getAccount();
     }
 
     @Test
     public void canShowUserInformation() {
         assertEquals(TestData.getUserInformation(), tester.getUserInformation());
+    }
+
+    @Test
+    public void canCheckLibraryNumberAndPasswordIsCorrect() {
+        assertEquals(true, tester.authenticate("111-2222", "biblio"));
     }
 }

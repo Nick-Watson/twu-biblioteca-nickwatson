@@ -4,6 +4,7 @@ public class Item {
     private String title;
     private int year;
     private Boolean isCheckedOut = false;
+    private String checkedOutBy = null;
 
     Item(String title, int year) {
         this.title = title;
@@ -22,7 +23,17 @@ public class Item {
         return isCheckedOut;
     }
 
-    public void setIsCheckedOut(Boolean checkedOut) {
-        isCheckedOut = checkedOut;
+    public String getCheckedOutBy() {
+        return checkedOutBy;
+    }
+
+    public void checkoutItem(String libraryNumber) {
+        isCheckedOut = true;
+        checkedOutBy = libraryNumber;
+    }
+
+    public void returnItem() {
+        isCheckedOut = false;
+        checkedOutBy = null;
     }
 }

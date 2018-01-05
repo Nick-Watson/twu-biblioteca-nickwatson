@@ -11,8 +11,7 @@ public class UserAccountsTest {
     @Before
     public void setUp() {
         tester = new UserAccounts();
-        Account test = new Account("nick watson", "nickwatson@gmail.com", "07807388815");
-        tester.addAccount("111-2222", test);
+        tester.addAccount("111-2222", TestData.getAccount());
     }
 
     @Test
@@ -23,5 +22,10 @@ public class UserAccountsTest {
     @Test
     public void canGetASpecificUserAccount() {
         assertEquals(TestData.getUserInformation(), tester.getAccountByLibraryNum("111-2222").getUserInformation());
+    }
+
+    @Test
+    public void canAuthenticateALogin() {
+        assertTrue(tester.authenticate("111-2222", "biblio"));
     }
 }

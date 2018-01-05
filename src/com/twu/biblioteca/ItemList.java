@@ -31,10 +31,10 @@ public class ItemList {
         return false;
     }
 
-    public void checkoutItem(String item) {
+    public void checkoutItem(String item, String libraryNumber) {
         for (Item i : getAvailableItems()) {
             if (i.getTitle().toLowerCase().equals(item.toLowerCase()) && !i.isCheckedOut()) {
-                i.setIsCheckedOut(true);
+                i.checkoutItem(libraryNumber);
             }
         }
     }
@@ -42,7 +42,7 @@ public class ItemList {
     public void returnItem(String item) {
         for (Item i : getAvailableItems()) {
             if (i.getTitle().toLowerCase().equals(item.toLowerCase()) && i.isCheckedOut()) {
-                i.setIsCheckedOut(false);
+                i.returnItem();
             }
         }
     }

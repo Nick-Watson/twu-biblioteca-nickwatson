@@ -34,19 +34,19 @@ public class ItemListTest {
     @Test
     public void checkoutItem() {
         assertTrue(tester.itemIsAvailable("Inception"));
-        tester.checkoutItem("Inception");
+        tester.checkoutItem("Inception", "111-2222");
         assertFalse(tester.itemIsAvailable("Inception"));
     }
 
     @Test
     public void itemCanBeReturned() {
-        tester.checkoutItem("Inception");
+        tester.checkoutItem("Inception", "111-2222");
         assertTrue(tester.itemCanBeReturned("Inception"));
     }
 
     @Test
     public void returnItem() {
-        tester.checkoutItem("Inception");
+        tester.checkoutItem("Inception", "111-2222");
         assertFalse(tester.itemIsAvailable("Inception"));
         tester.returnItem("Inception");
         assertTrue(tester.itemIsAvailable("Inception"));

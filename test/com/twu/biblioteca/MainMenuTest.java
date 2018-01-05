@@ -13,7 +13,12 @@ public class MainMenuTest {
     }
 
     @Test
-    public void displayOptions() {
-        assertEquals(TestData.getMenuDisplay(), tester.displayOptions());
+    public void displayOptionsNoLogin() {
+        assertEquals(TestData.getMenuDisplayNoLogin(), tester.displayOptions(false));
+    }
+
+    @Test
+    public void displayOptionsLoggedIn() {
+        assertEquals(TestData.getMenuDisplayLoggedIn(), tester.displayOptions(true));
     }
 }
