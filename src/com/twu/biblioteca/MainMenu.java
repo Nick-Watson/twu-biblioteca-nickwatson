@@ -24,7 +24,7 @@ public class MainMenu implements Process {
             else s.append(option);
             s.append("\n");
         }
-        s.append("\nPlease input an option (case sensitive)\nAt anytime type Main Menu to return to main menu or Quit to exit\n");
+        s.append("\nPlease input an option\nAt anytime type MAIN MENU to return to main menu or QUIT to exit\n");
         return s.toString();
     }
 

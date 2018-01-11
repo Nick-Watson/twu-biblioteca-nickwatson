@@ -78,16 +78,16 @@ public class Library {
         return false;
     }
 
-    private Process parseCommand(String command) {
-        String noSpace = command.replaceAll("\\s+","");
-        if (isValidCommand(noSpace)) {
-            try {
-                return (Process) Class.forName("com.twu.biblioteca." + noSpace).newInstance();
-            } catch (Exception e) {
-                return new Quit();
-            }
-        }
-        else return new InvalidOption();
+    private String removeSpaceAndConvertToUppercase (String s) {
+        return s.replaceAll("\\s+","").toUpperCase();
+    }
+
+    private Commands parseCommand(String command) {
+        return isValidCommand(command) ? Commands.valueOf(command) : Commands.valueOf("INVALIDOPTION");
+    }
+
+    private Process getProcessForCommand(Commands command) {
+        return command.getProcess();
     }
 
     private void runProcess(Process process) {
@@ -95,14 +95,14 @@ public class Library {
     }
 
     public void executeCommand(String command) {
-        runProcess(parseCommand(command));
+        runProcess(getProcessForCommand(parseCommand(removeSpaceAndConvertToUppercase(command))));
     }
 
     public void start() {
         displayWelcomeMessage();
         executeCommand("Main Menu");
         while (!checkCommandIsQuit(getUser().getUserChoice())) {
-            runProcess(parseCommand(getUser().getUserInput()));
+            executeCommand(getUser().getUserInput());
         }
     }
 }

@@ -2,11 +2,11 @@ package com.twu.biblioteca;
 
 public class TestData {
     public static String getMenuDisplayNoLogin() {
-        return "Main Menu\n\n- Login\n- List Books\n- List Movies\n- Checkout Item\n- Return Item\n\nPlease input an option (case sensitive)\nAt anytime type Main Menu to return to main menu or Quit to exit\n";
+        return "Main Menu\n\n- Login\n- List Books\n- List Movies\n- Checkout Item\n- Return Item\n\nPlease input an option\nAt anytime type MAIN MENU to return to main menu or QUIT to exit\n";
     }
 
     public static String getMenuDisplayLoggedIn() {
-        return "Main Menu\n\n- User Details\n- List Books\n- List Movies\n- Checkout Item\n- Return Item\n\nPlease input an option (case sensitive)\nAt anytime type Main Menu to return to main menu or Quit to exit\n";
+        return "Main Menu\n\n- User Details\n- List Books\n- List Movies\n- Checkout Item\n- Return Item\n\nPlease input an option\nAt anytime type MAIN MENU to return to main menu or QUIT to exit\n";
     }
 
     public static String getUserInformation() {
