@@ -2,7 +2,7 @@ package com.twu.biblioteca;
 
 import java.util.ArrayList;
 
-public class MainMenu {
+public class MainMenu implements Process {
     private ArrayList<String> options = new ArrayList<String>();
 
     MainMenu() {
@@ -19,12 +19,17 @@ public class MainMenu {
         for (String option : options) {
             s.append("- ");
             if (option.equals("Login")) {
-                s.append(loggedIn ? "User" : option);
+                s.append(loggedIn ? "User Details" : option);
             }
             else s.append(option);
             s.append("\n");
         }
-        s.append("\nPlease select an option\n(At anytime type main menu to return to main menu or quit to exit)\n");
+        s.append("\nPlease input an option (case sensitive)\nAt anytime type Main Menu to return to main menu or Quit to exit\n");
         return s.toString();
+    }
+
+    @Override
+    public void run(Library library) {
+        library.printToConsole(displayOptions(library.getUser().getLoggedIn()));
     }
 }

@@ -8,6 +8,6 @@ public class BibliotecaApp {
         BPL.setMovieList(Data.buildMovieList());
         BPL.setUserAccounts(Data.buildUserAccounts());
         BPL.setUser(new User());
-        BPL.run();
+        BPL.start();
     }
 }

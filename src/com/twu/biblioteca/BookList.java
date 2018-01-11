@@ -1,6 +1,6 @@
 package com.twu.biblioteca;
 
-public class BookList extends ItemList {
+public class BookList extends ItemList{
     private String headerToString() {
         return String.format("%-25s%-25s%-25s\n","Title","Author","Year");
     }
@@ -29,4 +29,5 @@ public class BookList extends ItemList {
     public String returnSuccessMessage() {
         return "Thank you for returning the book";
     }
+
 }

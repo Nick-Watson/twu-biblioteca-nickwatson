@@ -2,11 +2,12 @@ package com.twu.biblioteca;
 
 public class Library {
     private String name;
-    private MainMenu mainMenu = new MainMenu();
     private UserAccounts userAccounts = null;
     private BookList bookList = null;
     private MovieList movieList = null;
     private User user = null;
+
+    Library(){}
 
     Library (String name) {
         this.name = name;
@@ -16,7 +17,7 @@ public class Library {
         return this.name;
     }
 
-    private UserAccounts getUserAccounts() {
+    public UserAccounts getUserAccounts() {
         return userAccounts;
     }
 
@@ -28,11 +29,11 @@ public class Library {
         this.user = usr;
     }
 
-    private User getUser() {
+    public User getUser() {
         return this.user;
     }
 
-    private BookList getBookList() {
+    public BookList getBookList() {
         return this.bookList;
     }
 
@@ -40,7 +41,7 @@ public class Library {
         this.bookList = bookList;
     }
 
-    private MovieList getMovieList() {
+    public MovieList getMovieList() {
         return movieList;
     }
 
@@ -48,15 +49,11 @@ public class Library {
         this.movieList = movieList;
     }
 
-    private MainMenu getMainMenu(){
-        return this.mainMenu;
-    }
-
     public String createWelcomeMessage(){
         return "Welcome to the " + getLibraryName();
     }
 
-    private void printToConsole(String s) {
+    public void printToConsole(String s) {
         System.out.println(s);
     }
 
@@ -64,145 +61,48 @@ public class Library {
         printToConsole(createWelcomeMessage());
     }
 
-    private void displayMainMenu() {
-        printToConsole(getMainMenu().displayOptions(getUser().getLoggedIn()));
+    public Boolean checkCommandIsQuit(String input) {
+        return input.toLowerCase().equals("quit");
     }
 
-    private void processLogin() {
-        while (!getUser().getLoggedIn()) {
-            printToConsole("Please input library number");
-            String libraryNumber = getUser().getUserInput();
-            printToConsole("Please input password");
-            String password = getUser().getUserInput();
-
-            if (getUserAccounts().authenticate(libraryNumber, password)) {
-                getUser().setLoggedIn(true);
-                getUser().setAccount(getUserAccounts().getAccountByLibraryNum(libraryNumber));
-                printToConsole("login success");
-            } else printToConsole("login fail, try again");
-        }
+    public Boolean checkCommandIsMainMenu(String input) {
+        return input.toLowerCase().equals("main menu");
     }
 
-    private void processUserInformation() {
-        printToConsole(getUser().getUserInformation());
-    }
-
-    private void processListBooks() {
-        printToConsole(getBookList().displayList());
-    }
-
-    private void processListMovies() {
-        printToConsole(getMovieList().displayList());
-    }
-
-    private String checkoutItemInstructions() {
-        return "Input the item you would like to checkout or main menu to go back";
-    }
-
-    private String invalidCheckoutMessage() {
-        return "That item is not available";
-    }
-
-    private String returnItemInstructions() {
-        return "Input the item you would like to return or main menu to go back";
-    }
-
-    private String invalidReturnMessage() {
-        return "That is not a valid item to return";
-    }
-
-    private Boolean checkCommandIsQuit (String input) {
-        return input.equals("quit");
-    }
-
-    private Boolean checkCommandIsMainMenu (String input) {
-        return input.equals("main menu");
-    }
-
-    private Boolean processBookCheckout (String book) {
-        getBookList().checkoutItem(book, getUser().getUserLibraryNumber());
-        printToConsole(getBookList().checkoutSuccessMessage());
-        return true;
-    }
-
-    private Boolean processMovieCheckout (String movie) {
-        getMovieList().checkoutItem(movie, getUser().getUserLibraryNumber());
-        printToConsole(getMovieList().checkoutSuccessMessage());
-        return true;
-    }
-
-    private Boolean processBookReturn(String book) {
-        getBookList().returnItem(book);
-        printToConsole(getBookList().returnSuccessMessage());
-        return true;
-    }
-
-    private Boolean processMovieReturn(String movie) {
-        getMovieList().returnItem(movie);
-        printToConsole(getMovieList().returnSuccessMessage());
-        return true;
-    }
-
-    private void processCheckoutItem() {
-        if (!getUser().getLoggedIn()) processLogin();
-        printToConsole(checkoutItemInstructions());
-        Boolean checkoutSuccess = false;
-        String input = getUser().getUserInput();
-        while (!checkoutSuccess && !checkCommandIsQuit(input) && !checkCommandIsMainMenu(input)) {
-            if (getBookList().itemIsAvailable(input)) checkoutSuccess = processBookCheckout(input);
-            else if (getMovieList().itemIsAvailable(input))checkoutSuccess = processMovieCheckout(input);
-            else {
-                printToConsole(invalidCheckoutMessage());
-                input = getUser().getUserInput();
+    private Boolean isValidCommand(String command) {
+        for (Commands c : Commands.values()) {
+            if (c.name().equals(command)) {
+                return true;
             }
         }
-        if (checkCommandIsQuit(input)) processCommand("quit");
-        if (checkCommandIsMainMenu(input)) processCommand("main menu");
+        return false;
     }
 
-    private void processReturnItem() {
-        if (!getUser().getLoggedIn()) processLogin();
-        printToConsole(returnItemInstructions());
-        Boolean returnSuccess = false;
-        String input = getUser().getUserInput();
-        while (!returnSuccess && !checkCommandIsQuit(input) && !checkCommandIsMainMenu(input)) {
-            if (getBookList().itemCanBeReturned(input)) returnSuccess = processBookReturn(input);
-            else if (getMovieList().itemCanBeReturned(input))returnSuccess = processMovieReturn(input);
-            else {
-                printToConsole(invalidReturnMessage());
-                input = getUser().getUserInput();
+    private Process parseCommand(String command) {
+        String noSpace = command.replaceAll("\\s+","");
+        if (isValidCommand(noSpace)) {
+            try {
+                return (Process) Class.forName("com.twu.biblioteca." + noSpace).newInstance();
+            } catch (Exception e) {
+                return new Quit();
             }
         }
-        if (checkCommandIsQuit(input)) processCommand("quit");
-        if (checkCommandIsMainMenu(input)) processCommand("main menu");
+        else return new InvalidOption();
     }
 
-    private void processQuit() {
-        printToConsole("Goodbye");
-        System.exit(0);
+    private void runProcess(Process process) {
+        process.run(this);
     }
 
-    private void processInvalidOption() {
-        printToConsole("Select a valid option!");
+    public void executeCommand(String command) {
+        runProcess(parseCommand(command));
     }
 
-    private void processCommand(String command) {
-        if (command.equals("quit")) processQuit();
-        else if (command.equals("main menu")) displayMainMenu();
-        else if (command.equals("login")) processLogin();
-        else if (command.equals("user")) processUserInformation();
-        else if (command.equals("list books")) processListBooks();
-        else if (command.equals("list movies")) processListMovies();
-        else if (command.equals("checkout item")) processCheckoutItem();
-        else if (command.equals("return item")) processReturnItem();
-        else processInvalidOption();
-    }
-
-    public void run() {
+    public void start() {
         displayWelcomeMessage();
-        displayMainMenu();
+        executeCommand("Main Menu");
         while (!checkCommandIsQuit(getUser().getUserChoice())) {
-            processCommand(getUser().getUserInput());
+            runProcess(parseCommand(getUser().getUserInput()));
         }
     }
 }

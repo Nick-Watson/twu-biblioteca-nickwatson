@@ -15,6 +15,6 @@ public class UserTest {
         String input = "List Books";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        assertEquals("list books", customer.getUserInput());
+        assertEquals("List Books", customer.getUserInput());
     }
 }

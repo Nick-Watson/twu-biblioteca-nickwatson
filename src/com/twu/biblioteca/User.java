@@ -14,7 +14,7 @@ public class User {
     public String getUserInput() {
         Scanner scanner = new Scanner(System.in);
         try{
-            String s = scanner.nextLine().toLowerCase();
+            String s = scanner.nextLine();
             this.userChoice = s;
             return s;
         }

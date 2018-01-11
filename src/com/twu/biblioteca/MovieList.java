@@ -1,6 +1,6 @@
 package com.twu.biblioteca;
 
-public class MovieList extends ItemList {
+public class MovieList extends ItemList{
     private String headerToString() {
         return String.format("%-25s%-25s%-25s%-25s\n","Title","Director","Year", "Rating");
     }
@@ -29,4 +29,5 @@ public class MovieList extends ItemList {
     public String returnSuccessMessage() {
         return "Thank you for returning the movie";
     }
+
 }
