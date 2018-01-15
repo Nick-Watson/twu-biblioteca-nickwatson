@@ -11,10 +11,9 @@ public class UserTest {
 
     @Test
     public void getUserInput() {
-        User customer = new User();
-        String input = "List Books";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
+        InputStream in = new ByteArrayInputStream("List Books".getBytes());
         System.setIn(in);
+        User customer = new User();
         assertEquals("List Books", customer.getUserInput());
     }
 }

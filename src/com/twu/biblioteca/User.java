@@ -6,13 +6,13 @@ public class User {
     private String userChoice = "";
     private Boolean loggedIn = false;
     private Account account = null;
+    private Scanner scanner = new Scanner(System.in);
 
     public String getUserChoice() {
         return this.userChoice;
     }
 
     public String getUserInput() {
-        Scanner scanner = new Scanner(System.in);
         try{
             String s = scanner.nextLine();
             this.userChoice = s;
@@ -39,7 +39,7 @@ public class User {
         this.loggedIn = loggedIn;
     }
 
-    private Account getAccount() {
+    public Account getAccount() {
         return account;
     }
 
